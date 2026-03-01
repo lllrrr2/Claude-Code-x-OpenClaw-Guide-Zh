@@ -533,7 +533,7 @@ work Agent → 你：已创建 PROJ-101, PROJ-102, PROJ-103
 
 ```json5
 {
-  "schedules": [
+  "cron": [
     {
       "name": "research-phase",
       "cron": "0 9 * * 1-5",
@@ -1036,7 +1036,7 @@ openclaw agents add writer
 
 ```json5
 {
-  "schedules": [
+  "cron": [
     {
       "name": "translate-new-content",
       "cron": "0 10 * * *",
@@ -1181,7 +1181,7 @@ openclaw agents add reviewer
 
 ```json5
 {
-  "schedules": [
+  "cron": [
     {
       "name": "weekly-research",
       "cron": "0 9 * * 1",
@@ -1539,7 +1539,7 @@ journalctl --since "1 hour ago" --priority err --no-pager | tail -20
       },
     ],
   },
-  "schedules": [
+  "cron": [
     {
       "name": "health-check",
       "cron": "*/30 * * * *",

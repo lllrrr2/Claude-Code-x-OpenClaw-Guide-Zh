@@ -8,7 +8,7 @@
 
 这篇 FAQ 收集了 OpenClaw 社区中最常见的问题和解决方案。按类别组织，方便你快速定位问题。
 
-如果这里没有你遇到的问题，可以到 [GitHub Issues](https://github.com/nicepkg/openclaw/issues) 提问，或加入 Discord 社区寻求帮助。
+如果这里没有你遇到的问题，可以到 [GitHub Issues](https://github.com/openclaw/openclaw/issues) 提问，或加入 Discord 社区寻求帮助。
 
 ---
 
@@ -1075,7 +1075,7 @@ openclaw skills list
 # 可以直接复制 .md 文件来分享技能
 
 # 查看社区技能库
-# https://github.com/nicepkg/openclaw-skills
+# https://github.com/openclaw/openclaw-skills
 ```
 
 ---
@@ -1495,7 +1495,7 @@ openclaw config set security.auditLog.enabled true
 npm update -g openclaw
 
 # 查看安全公告
-# https://github.com/nicepkg/openclaw/security/advisories
+# https://github.com/openclaw/openclaw/security/advisories
 
 # 检查当前版本是否有已知漏洞
 openclaw --version
@@ -1563,7 +1563,7 @@ npm config get registry
 
 # 如果还是不行，试试直接下载
 # 去 GitHub Releases 页面下载预编译包
-# https://github.com/nicepkg/openclaw/releases
+# https://github.com/openclaw/openclaw/releases
 
 # 或者用 Docker（镜像可以从国内源拉取）
 docker pull openclaw/openclaw:latest
@@ -1580,7 +1580,7 @@ docker pull openclaw/openclaw:latest
 
 **解决方案：**
 
-1. 去 [GitHub Issues](https://github.com/nicepkg/openclaw/issues) 页面
+1. 去 [GitHub Issues](https://github.com/openclaw/openclaw/issues) 页面
 2. 点击 "New Issue"
 3. 选择 "Bug Report" 模板
 4. 填写以下信息：
@@ -1656,14 +1656,14 @@ openclaw skills check my-awesome-skill --input "测试"
 
 # 3. 分享到社区
 # 在 GitHub 上创建一个仓库，或者提交到 OpenClaw 的技能市场
-# https://github.com/nicepkg/openclaw-skills
+# https://github.com/openclaw/openclaw-skills
 ```
 
 ### Q71: 有中文社区吗？
 
 **说明：** 有的。
 
-- GitHub Discussions（中英文都可以）：[github.com/nicepkg/openclaw/discussions](https://github.com/nicepkg/openclaw/discussions)
+- GitHub Discussions（中英文都可以）：[github.com/openclaw/openclaw/discussions](https://github.com/openclaw/openclaw/discussions)
 - Discord 社区（有中文频道）
 - 微信群：关注 OpenClaw 公众号获取入群二维码
 
@@ -1769,8 +1769,8 @@ Gateway 是基础设施层，Agent 是业务逻辑层。一个 Gateway 可以服
 
 1. 查看本 FAQ 文档
 2. 查看[官方文档](https://docs.openclaw.ai)
-3. 搜索 [GitHub Issues](https://github.com/nicepkg/openclaw/issues)（可能别人遇到过同样的问题）
-4. 在 [GitHub Discussions](https://github.com/nicepkg/openclaw/discussions) 提问
+3. 搜索 [GitHub Issues](https://github.com/openclaw/openclaw/issues)（可能别人遇到过同样的问题）
+4. 在 [GitHub Discussions](https://github.com/openclaw/openclaw/discussions) 提问
 5. 加入 Discord 社区实时交流
 
 提问时请附上：
