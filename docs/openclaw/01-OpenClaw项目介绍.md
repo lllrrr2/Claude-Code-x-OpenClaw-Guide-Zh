@@ -869,6 +869,7 @@ OpenClaw 的设计哲学很明确：**它是一个个人助手，不是企业平
 | CLI Reference | docs.openclaw.ai/cli | 官方 CLI 参考 |
 | Discord 社区 | discord.gg/clawd | 实时问答 |
 | DeepWiki | deepwiki.com/openclaw/openclaw | AI 生成的代码文档 |
+| SkillClaw | https://github.com/AMAP-ML/SkillClaw | 长期 skill 库治理与集体演化框架，适合研究多用户、多设备场景下的 skill 去重、合并、提质和共享；论文见 https://arxiv.org/abs/2604.08377 |
 | 本系列教程 | 你正在读的这个 | 中文完整指南 |
 
 ## 快速体验

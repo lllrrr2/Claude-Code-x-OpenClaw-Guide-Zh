@@ -41,10 +41,10 @@
 
 | 术语 | 英文全称 | 通俗解释 |
 |------|----------|----------|
-| **Subagent** | Sub-agent | 子代理，Claude Code 通过 Task 工具启动的专业化 AI 代理 |
+| **Subagent** | Sub-agent | 子代理，Claude Code 通过 Agent 工具启动的专业化 AI 代理 |
 | **VoltAgent** | - | 社区维护的 awesome-claude-code-subagents 开源项目 |
 | **Agent Definition** | - | `.md` 格式的代理定义文件，描述代理的角色、能力和行为规范 |
-| **Task 工具** | Task Tool | Claude Code 内置工具，用于启动子代理执行独立任务 |
+| **Agent 工具** | Agent Tool | Claude Code 内置工具，用于启动子代理执行独立任务；旧资料可能写作 Task |
 | **并行调用** | Parallel Invocation | 同时启动多个子代理处理不同任务，提高效率 |
 
 ---
@@ -62,7 +62,7 @@
 
 官方 Subagents 的最小闭环不是“先去装一个第三方代理包”，而是：
 
-1. **知道 Claude Code 可以用 Task 工具委派子任务**
+1. **知道 Claude Code 可以用 Agent 工具委派子任务**
 2. **知道项目级 / 用户级子代理定义文件放在哪里**
 3. **知道如何在当前项目里启用和查看它们**
 
@@ -70,7 +70,7 @@
 
 | 入口 | 作用 | 什么时候用 |
 |------|------|-----------|
-| **Task 工具** | 把一个子任务委派给独立上下文窗口 | 日常并行处理 |
+| **Agent 工具** | 把一个子任务委派给独立上下文窗口 | 日常并行处理 |
 | **`.claude/agents/`** | 项目级子代理定义目录 | 当前仓库专用代理 |
 | **`~/.claude/agents/`** | 用户级子代理定义目录 | 跨项目复用代理 |
 

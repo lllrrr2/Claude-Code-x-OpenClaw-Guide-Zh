@@ -2222,6 +2222,7 @@ if __name__ == "__main__":
 2. 参考公众号写作助手的SKILL.md架构设计更复杂的Skill
 3. 与团队分享你的Skill，收集反馈持续优化
 4. 深入理解Hot Reloading和渐进式披露机制
+5. 如果团队已经积累了大量 Skills，可以进一步研究 [SkillClaw](https://github.com/AMAP-ML/SkillClaw)：它关注跨用户、长期使用轨迹驱动的 skill 去重、合并、提质和共享，论文见 [arXiv:2604.08377](https://arxiv.org/abs/2604.08377)
 
 ---
 

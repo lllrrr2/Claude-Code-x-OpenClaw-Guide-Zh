@@ -741,12 +741,27 @@ Subagents方式（主管+多员工）：
 **使用Subagents的方式**：
 
 ```python
-# 允许Task工具，Agent会自动创建子代理
+from claude_agent_sdk import ClaudeAgentOptions, AgentDefinition
+
+# 当前 SDK 通过 Agent 工具创建子代理
 options = ClaudeAgentOptions(
-    allowed_tools=['Task', 'TaskOutput', 'Read', 'Write', 'Edit'],
+    allowed_tools=['Read', 'Grep', 'Glob', 'Edit', 'Write', 'Agent'],
+    agents={
+        'api-refactorer': AgentDefinition(
+            description='负责 API 目录重构，适合处理 src/api 下的模块迁移任务。',
+            prompt='你是 API 重构专家。只处理分配给你的目录，返回修改摘要和风险点。',
+            tools=['Read', 'Grep', 'Glob', 'Edit', 'Write'],
+            model='sonnet',
+        ),
+        'model-typist': AgentDefinition(
+            description='负责数据模型和 TypeScript 类型补全。',
+            prompt='你是 TypeScript 类型建模专家。优先保持兼容性，避免无关重构。',
+            tools=['Read', 'Grep', 'Glob', 'Edit', 'Write'],
+        ),
+    },
     max_turns=50,
     system_prompt="""你是一个项目重构专家。
-    当遇到大型任务时，请使用Task工具创建子代理来并行处理。
+    当遇到大型任务时，优先使用已定义的子代理并行处理。
     每个子代理应该专注于一个独立的模块或目录。"""
 )
 
@@ -761,22 +776,23 @@ async for message in query(prompt=prompt, options=options):
     # 处理消息...
 ```
 
-### 3.5 Task 工具与子代理编排（CLI 内置）
+> **版本校准（2026-04）**：官方 Agent SDK 文档当前要求在 `allowed_tools` / `allowedTools` 中包含 `Agent`，因为子代理通过 **Agent tool** 调用。旧资料里可能会看到 `Task`，官方文档说明该工具名在 Claude Code v2.1.63 从 `Task` 改为 `Agent`；为兼容旧 SDK，观测 `tool_use` 事件时可以同时识别 `Task` 和 `Agent`，但新教程示例应写 `Agent`。
 
-> **补充说明**：上面 3.4 节讲的是 SDK 中如何编程创建子代理。这里介绍 Claude Code CLI 中**内置的 Task 工具**——你在交互模式下就能直接使用的多 Agent 编排系统。
+### 3.5 Agent 工具与子代理编排
 
-Claude Code CLI 内置了强大的 **Task 工具**，无需写代码就能让 Claude 自动创建子代理：
+在 SDK 中，推荐用 `agents` 参数定义子代理，再把 `Agent` 加入主 Agent 的 `allowed_tools`。在 Claude Code CLI 交互模式中，普通用户通常不直接手写底层工具调用，而是通过 `/agents` 管理 agent 配置，或在自然语言里明确要求“使用某个 agent”。
 
-**核心参数**：
+**AgentDefinition 核心字段**：
 
 | 参数 | 说明 |
 |------|------|
-| `subagent_type` | 子代理类型（Explore、Bash、code-reviewer 等） |
-| `prompt` | 分配给子代理的任务描述 |
-| `isolation` | 设为 `"worktree"` 可在独立工作树中运行 |
-| `run_in_background` | 设为 `true` 在后台运行 |
-| `resume` | 传入之前的 agent ID 可恢复中断的子代理 |
-| `model` | 可指定 sonnet/opus/haiku，不指定则继承父级 |
+| `description` | 告诉 Claude 什么时候应该使用这个子代理 |
+| `prompt` | 子代理自己的系统提示词 / 行为规范 |
+| `tools` | 子代理可用工具；省略时继承父级可用工具 |
+| `model` | 可用 `sonnet` / `opus` / `haiku` / `inherit` 或完整模型 ID |
+| `background` | 是否作为非阻塞后台任务运行 |
+| `maxTurns` | 子代理最大 agentic turn 数 |
+| `skills` | 明确注入给该子代理的技能列表 |
 
 **常用子代理类型**：
 
@@ -788,9 +804,9 @@ Claude Code CLI 内置了强大的 **Task 工具**，无需写代码就能让 Cl
 | `general-purpose` | 通用多步骤任务 | 全部工具 |
 | `Plan` | 设计实现方案 | 全部（不含写入） |
 
-**任务依赖（DAG 系统）**：
+**并行编排方式**：
 
-Task 工具支持有向无环图（DAG）依赖关系——任务 C 可以等待任务 A 和任务 B 完成后再执行：
+主 Agent 可以一次启动多个适合的子代理。子代理各自拥有独立上下文，只把最终结果返回给父级；如果后续步骤依赖前置结论，把依赖关系写进父级 prompt，让父级在收到结果后再继续分配下一步。
 
 ```
 任务A: 构建API   ──┐
@@ -804,7 +820,7 @@ Task 工具支持有向无环图（DAG）依赖关系——任务 C 可以等待
 
 1. **Skills 注入**：在定义中指定 skills 字段，完整技能内容直接注入子代理
 2. **Memory 持久化**：子代理可拥有持久记忆目录，跨会话积累知识
-3. **工具访问控制**：通过 `allowedTools` / `disallowedTools` 精细控制子代理能力
+3. **工具访问控制**：通过 `tools` / `disallowedTools` 精细控制子代理能力
 
 > 💡 **提示**：子代理不能再创建子代理（只有一层嵌套），最多可同时运行 10 个并行子代理。
 
@@ -1352,7 +1368,7 @@ review_options = ClaudeAgentOptions(
 
 # 完全权限Agent - 可以做任何事
 full_options = ClaudeAgentOptions(
-    allowed_tools=['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'Task'],
+    allowed_tools=['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'Agent'],
     permission_mode='acceptEdits'
 )
 ```
@@ -1589,13 +1605,13 @@ options = ClaudeAgentOptions(
 
 ### Q4: 子代理和主代理怎么通信？
 
-**答**：通过Task和TaskOutput工具：
+**答**：通过 `Agent` 工具调用与最终结果回传：
 
-1. 主Agent用Task工具创建子代理，指定任务
+1. 主 Agent 通过 `Agent` 工具创建/调用子代理，指定任务
 2. 子代理执行任务并返回结果
-3. 主Agent用TaskOutput工具获取结果
+3. 主 Agent 收到子代理最终消息，作为后续汇总或下一步决策的输入
 
-子代理完成后，结果会自动返回给主Agent。
+子代理运行在独立上下文里，父级不会自动继承它读过的所有文件和中间工具结果；需要保留的信息应让子代理在最终回复里明确写出来。
 
 ---
 
@@ -1650,16 +1666,16 @@ async for message in query(prompt="...", options=options):
 
 **答**：
 
-1. **使用后台运行的子代理**：Task工具支持`run_in_background`
+1. **使用后台运行的子代理**：在 `AgentDefinition` 中设置 `background=True`
 2. **设置合理的超时**
 3. **使用异步并行**
 
 ```python
 prompt = """请使用子代理并行处理：
-- 子代理1：分析src目录（run_in_background: true）
-- 子代理2：分析tests目录（run_in_background: true）
+- 子代理1：分析src目录
+- 子代理2：分析tests目录
 
-启动后等待所有子代理完成再汇总。"""
+如果这些子代理被配置为 background=True，请持续跟踪它们的最终结果后再汇总。"""
 ```
 
 ---

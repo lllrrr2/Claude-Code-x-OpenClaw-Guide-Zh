@@ -1702,11 +1702,11 @@ claude -w
 
 ### 3.8 SubagentStart 和 SubagentStop（子代理生命周期）🆕
 
-> **v2.1.49+ 新增**：这两个Hook类型用于监控和管理子代理（Subagent/Task）的生命周期。
+> **v2.1.49+ 新增**：这两个Hook类型用于监控和管理子代理（Subagent/Agent）的生命周期。
 
 #### SubagentStart（子代理启动时触发）
 
-**触发时机**：Claude Code 启动子代理（通过 Task 工具）时自动触发
+**触发时机**：Claude Code 启动子代理（通过 Agent 工具；旧资料可能写作 Task）时自动触发
 
 **典型用途**：
 - 记录子代理启动日志

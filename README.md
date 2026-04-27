@@ -232,6 +232,7 @@ Week 9  ：OpenClaw 多Agent + Docker部署 + 安全
 
 - Claude Code：09-Agent-SDK、10-综合实战
 - OpenClaw：08-多Agent、09-Docker部署、10-安全
+- 长期 Skill 治理：可参考 [SkillClaw](https://github.com/AMAP-ML/SkillClaw)（skill 演化、去重、合并、共享；论文 [arXiv:2604.08377](https://arxiv.org/abs/2604.08377)）
 
 ---
 
@@ -309,7 +310,7 @@ Week 9  ：OpenClaw 多Agent + Docker部署 + 安全
 - OC-11 常见问题：安装/连接/模型/记忆/性能/中国用户专区
 
 **Claude Code 教程补充**
-- 08-Agent-SDK 新增 3.5 节：Task 工具与子代理编排（子代理类型、DAG 依赖、上下文注入）
+- 08-Agent-SDK 新增 3.5 节：子代理编排（历史稿使用 Task 工具表述；当前版本已校准为 Agent 工具）
 - 02-基础使用 /permissions 节新增权限模式切换（plan/acceptEdits/bypassPermissions）和 allowedTools 配置
 - 04-MCP集成新增 MCP Apps 交互式界面、工具懒加载 ToolSearch（上下文减少 95%）、远程 MCP 服务器
 - README 联系方式新增 X(Twitter) 和微信公众号信息
@@ -339,7 +340,7 @@ Week 9  ：OpenClaw 多Agent + Docker部署 + 安全
 - 回复 Issue #2：SQLite MCP 包名验证与替代方案
 
 **已完成（原待办项）**
-- ✅ 08-Agent-SDK 新增 3.5 节：Task 工具与子代理编排（CLI 内置 Subagent 系统）
+- ✅ 08-Agent-SDK 新增 3.5 节：子代理编排（当前版本使用 Agent 工具表述）
 - ✅ 02-基础使用 /permissions 节新增权限模式切换、allowedTools 配置说明
 - ✅ 04-MCP集成 新增 MCP Apps、工具懒加载（v2.1.52+）、远程 MCP 服务器说明
 
